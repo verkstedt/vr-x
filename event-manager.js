@@ -1,7 +1,8 @@
 /* global AFRAME */
 AFRAME.registerComponent('event-manager', {
-
   init: function () {
+    this.answered = false;
+
     this.bindMethods();
 
     this.questionEl = this.el.querySelector('[data-question]');
@@ -20,28 +21,43 @@ AFRAME.registerComponent('event-manager', {
   },
 
   onQuestion: function (event) {
-    const targetEl = event.target;
-    const wasPressed = targetEl.is('pressed');
-    this.answersEl.setAttribute('visible', !wasPressed);
-    if (wasPressed) {
-      targetEl.removeState('pressed');
-    } else {
-      targetEl.addState('pressed');
-    }
-  },
-
-  onAnswer: function (event) {
-    if (this.answersEl.getAttribute('visible') !== false) {
+    if (!this.answered) {
       const targetEl = event.target;
-      console.log('ANSWER:', targetEl.getAttribute('button').label);
-      const isCorrect = targetEl.getAttribute('data-answer') === 'correct';
-      targetEl.setAttribute('button', 'activeColour', isCorrect ? 'green' : 'red');
       const wasPressed = targetEl.is('pressed');
+      this.answersEl.setAttribute('visible', !wasPressed);
       if (wasPressed) {
         targetEl.removeState('pressed');
       } else {
         targetEl.addState('pressed');
       }
+    }
+  },
+
+  onAnswer: function (event) {
+    if (
+      !this.answered &&
+      this.answersEl.getAttribute('visible') !== false
+    ) {
+      const targetEl = event.target;
+      const isCorrect = targetEl.getAttribute('data-answer') === 'correct';
+      console.log('ANSWER:', targetEl.getAttribute('button').label, { isCorrect });
+
+      Array.from(this.answerEls).forEach((answerEl) => {
+        if (answerEl === targetEl) {
+          answerEl.setAttribute('button', 'activeColour', isCorrect ? 'green' : 'red');
+          answerEl.addState('pressed');
+        } else {
+          answerEl.setAttribute('button', 'inactiveColour', 'gray');
+          answerEl.addState('pressed');
+          answerEl.removeState('pressed');
+        }
+      });
+
+      this.questionEl.setAttribute('button', 'activeColour', isCorrect ? 'green' : 'red');
+      this.questionEl.removeState('pressed');
+      this.questionEl.addState('pressed');
+
+      this.answered = true;
     }
   }
 });
