@@ -1,12 +1,13 @@
 import { fetchQuestionsFromOpentdb } from "./fetchQuestionsFromOpentdb.js";
 
-let questionIndex = -1;
+let questionIndex = 0;
 const questions = fetchQuestionsFromOpentdb();
 
 /* global AFRAME */
 AFRAME.registerComponent("menu", {
   init: async function () {
     const index = questionIndex;
+    questionIndex += 1;
 
     var el = this.el;
 
