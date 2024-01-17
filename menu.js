@@ -1,45 +1,44 @@
-let first = true;
+import { fetchQuestionsFromOpentdb } from "./fetchQuestionsFromOpentdb.js";
+
+let questionIndex = -1;
+const questions = fetchQuestionsFromOpentdb();
 
 /* global AFRAME */
-import { fetchQuestionsFromOpentdb } from "./fetchQuestionsFromOpentdb.js";
 AFRAME.registerComponent("menu", {
   init: async function () {
+    const index = questionIndex;
+
     var el = this.el;
 
+    var data = (await questions)[index];
+    var answers = [];
+    answers.push(data.correct_answer);
+    answers.push(...data.incorrect_answers);
 
-    if (first) {
-      first = false
-      var data = (await fetchQuestionsFromOpentdb())[0]; // Array
-      console.log(data);
-      var answers = [];
-      answers.push(data.correct_answer);
-      answers.push(...data.incorrect_answers);
+    answers.sort(() => Math.random() - 0.5);
 
-      answers.sort(() => Math.random() - 0.5);
+    this.questionEl = this.el.querySelector("[data-question]");
+    this.questionEl.setAttribute("button", {
+      label: data.question,
+      width: 0.5,
+      height: 0.1,
+    });
 
-      this.questionEl = this.el.querySelector("[data-question]");
-      this.questionEl.setAttribute("button", {
-        label: data.question,
+    this.answersEl = this.questionEl.querySelector("[data-answers]");
+    this.answerEls = this.el.querySelectorAll("[data-answer]");
+    var k = 0;
+    Array.from(this.answerEls).forEach((answerEl) => {
+      answerEl.setAttribute("button", {
+        label: answers[k],
         width: 0.5,
         height: 0.1,
       });
-
-      this.answersEl = this.questionEl.querySelector("[data-answers]");
-      this.answerEls = this.el.querySelectorAll("[data-answer]");
-      var k = 0;
-      Array.from(this.answerEls).forEach((answerEl) => {
-        answerEl.setAttribute("button", {
-          label: answers[k],
-          width: 0.5,
-          height: 0.1,
-        });
-        answerEl.setAttribute(
-          "data-answer",
-          answers[k] === data.correct_answer ? "correct" : "incorrect"
-        );
-        k++;
-      });
-  }
+      answerEl.setAttribute(
+        "data-answer",
+        answers[k] === data.correct_answer ? "correct" : "incorrect"
+      );
+      k++;
+    });
 
 
 
