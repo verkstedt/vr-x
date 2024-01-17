@@ -10,7 +10,8 @@
     <script src="color-change.js"></script>
     <script src="size-change.js"></script>
     <script src="button.js"></script>
-    <script src="menu.js"></script>
+    <script type="module" src="menu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="pressable.js"></script>
     <script src="event-manager.js"></script>
   </head>
@@ -35,7 +36,6 @@
           data-question
           class="raycastable"
           button="
-            label: In the server hosting industry IaaS stands for;
             width: 1;
             height: 0.5;
             inactiveColour: red;
@@ -51,8 +51,6 @@
             data-answer="correct"
             class="raycastable"
             button="
-              label: Infrastructure as a Service;
-              pressed: true;
               width: 0.5;
               height: 0.1;
             "
@@ -62,7 +60,6 @@
             data-answer="incorrect"
             class="raycastable"
             button="
-              label: Internet as a Service;
               width: 0.5;
               height: 0.1;
             "
@@ -72,7 +69,6 @@
             data-answer="incorrect"
             class="raycastable"
             button="
-              label: Internet and a Server;
               width: 0.5;
               height: 0.1;
             "
