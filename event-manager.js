@@ -47,7 +47,8 @@ AFRAME.registerComponent('event-manager', {
           answerEl.setAttribute('button', 'activeColour', isCorrect ? 'green' : 'red');
           answerEl.addState('pressed');
         } else {
-          answerEl.setAttribute('button', 'inactiveColour', 'gray');
+          const answerIsCorrect = answerEl.getAttribute('data-answer') === 'correct';
+          answerEl.setAttribute('button', 'inactiveColour', answerIsCorrect ? 'green' : 'gray');
           answerEl.addState('pressed');
           answerEl.removeState('pressed');
         }
