@@ -4,7 +4,7 @@ AFRAME.registerComponent('button', {
     label: {default: 'label'},
     width: {default: 1},
     height: {default: 0.5},
-    toggable: {default: false},
+    toggable: {default: true},
     inactiveColour: {default: '#3a50c5'},
     activeColour: {default: 'green'}
   },

@@ -15,67 +15,99 @@
     <script src="event-manager.js"></script>
   </head>
   <body>
-    <a-scene environment="preset: starry">
+    <a-scene
+      environment="
+        preset: starry;
+      "
+      cursor="rayOrigin: mouse; fuse: false"
+      raycaster="objects: .raycastable"
+    >
       <a-assets>
       </a-assets>
       <a-entity
-        id="menu"
         menu
-        position="0 1.5 -0.5"
-        rotation="-45 0 0"
+        position="0 1.6 -0.5"
+        rotation="-25 0 0"
         scale="0.5 0.5 0.5"
         event-manager
       >
         <a-entity
-          id="question"
+          data-question
+          class="raycastable"
           button="
-            label: In the server hosting industry IaaS stands for...;
+            label: In the server hosting industry IaaS stands for;
             width: 1;
             height: 0.5;
             inactiveColour: red;
+            activeColour: green;
           "
           position="0 0 0"
-          color="red"
         ></a-entity>
         <a-entity
-          id="answerA"
-          button="
-            label: Infrastructure as a Service;
-            width: 0.5;
-            height: 0.1;
-          "
-          position="-0.27 -0.33 0"
-        ></a-entity>
-        <a-entity
-          id="answerB"
-          button="
-            label: Internet as a Service;
-            width: 0.5;
-            height: 0.1;
-          "
-          position="0.27 -0.33 0"
-        ></a-entity>
-        <a-entity
-          id="answerC"
-          button="
-            label: Internet and a Server;
-            width: 0.5;
-            height: 0.1;
-          "
-          position="-0.27 -0.45 0"
-        ></a-entity>
-        <a-entity
-          id="answerD"
-          button="
-            label: Infrastructure as a Server;
-            width: 0.5;
-            height: 0.1;
-          "
-          position="0.27 -0.45 0"
-        ></a-entity>
+          data-answers
+          visible="false"
+        >
+          <a-entity
+            data-answer="correct"
+            class="raycastable"
+            button="
+              label: Infrastructure as a Service;
+              pressed: true;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="-0.27 -0.33 0"
+          ></a-entity>
+          <a-entity
+            data-answer="incorrect"
+            class="raycastable"
+            button="
+              label: Internet as a Service;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="0.27 -0.33 0"
+          ></a-entity>
+          <a-entity
+            data-answer="incorrect"
+            class="raycastable"
+            button="
+              label: Internet and a Server;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="-0.27 -0.45 0"
+          ></a-entity>
+          <a-entity
+            data-answer="incorrect"
+            class="raycastable"
+            button="
+              label: Infrastructure as a Server;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="0.27 -0.45 0"
+          ></a-entity>
+        </a-entity>
       </a-entity>
-      <a-entity hand-tracking-controls="hand: left"></a-entity>
-      <a-entity hand-tracking-controls="hand: right"></a-entity>
+      <a-entity
+        position="0 1.6 0"
+        camera
+        look-controls="magicWindowTrackingEnabled: false; touchEnabled: false; mouseEnabled: true"
+      >
+        <a-entity
+          id="fadeBackground"
+          geometry="primitive: sphere; radius: 2.5"
+          material="color: black; side: back; shader: flat; transparent: true; opacity: 0.6" visible="false">
+        </a-entity>
+      </a-entity>
+
+      <a-entity
+        hand-tracking-controls="hand: left"
+      ></a-entity>
+      <a-entity
+        hand-tracking-controls="hand: right"
+      ></a-entity>
     </a-scene>
   </body>
 </html>
