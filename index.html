@@ -2,14 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Hand Tracking! • A-Frame</title>
+    <title>Quiz Time!</title>
     <meta name="description" content="Hand Tracking! • A-Frame">
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="info-message.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.4/dist/aframe-environment-component.min.js"></script>
     <script src="pinchable.js"></script>
     <script src="color-change.js"></script>
-    <script src="slider.js"></script>
     <script src="size-change.js"></script>
     <script src="button.js"></script>
     <script src="menu.js"></script>
@@ -17,47 +15,99 @@
     <script src="event-manager.js"></script>
   </head>
   <body>
-    <a-scene environment info-message="htmlSrc: #messageText">
+    <a-scene
+      environment="
+        preset: starry;
+      "
+      cursor="rayOrigin: mouse; fuse: false"
+      raycaster="objects: .raycastable"
+    >
       <a-assets>
-        <a-asset-item id="messageText" src="message.html"></a-asset-item>
       </a-assets>
       <a-entity
-        id="boxGeometry"
-        position="0 2.0 -1"
-        rotation="45 45 0"
-        geometry="primitive: box; height: 0.6; width: 0.6; depth: 0.6"
-        material="color: #ff4b5c"
-        size-change
+        menu
+        position="0 1.6 -0.5"
+        rotation="-25 0 0"
         scale="0.5 0.5 0.5"
-      ></a-entity>
-       <a-entity
-        id="torusGeometry"
-        position="0 2.0 -1"
-        rotation="45 45 0"
-        geometry="primitive: torus; radius: 0.4; radius-tubular: 0.06"
-        material="color: #d2e603"
-        size-change
-        visible="false"
-        scale="0.5 0.5 0.5"
-      ></a-entity>
-       <a-entity
-        id="sphereGeometry"
-        position="0 2.0 -1"
-        rotation="45 45 0"
-        geometry="primitive: sphere; radius: 0.6;"
-        material="color: #fcdab7"
-        size-change
-        visible="false"
-        scale="0.5 0.5 0.5"
-      ></a-entity>
-      <a-entity id="menu" menu position="0 1.5 -0.5" rotation="-45 0 0" event-manager>
-        <a-entity id="sphereButton" button="label: sphere" position="-0.15 0 0"></a-entity>
-        <a-entity id="boxButton" button="label: box" position="0 0 0"></a-entity>
-        <a-entity id="torusButton" button="label: torus" position="0.15 0 0"></a-entity>
-        <a-entity id="darkModeButton" button="label: Dark Mode; width: 0.20; toggable: true" position="0 -0.10 0"></a-entity>
+        event-manager
+      >
+        <a-entity
+          data-question
+          class="raycastable"
+          button="
+            label: In the server hosting industry IaaS stands for;
+            width: 1;
+            height: 0.5;
+            inactiveColour: red;
+            activeColour: green;
+          "
+          position="0 0 0"
+        ></a-entity>
+        <a-entity
+          data-answers
+          visible="false"
+        >
+          <a-entity
+            data-answer="correct"
+            class="raycastable"
+            button="
+              label: Infrastructure as a Service;
+              pressed: true;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="-0.27 -0.33 0"
+          ></a-entity>
+          <a-entity
+            data-answer="incorrect"
+            class="raycastable"
+            button="
+              label: Internet as a Service;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="0.27 -0.33 0"
+          ></a-entity>
+          <a-entity
+            data-answer="incorrect"
+            class="raycastable"
+            button="
+              label: Internet and a Server;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="-0.27 -0.45 0"
+          ></a-entity>
+          <a-entity
+            data-answer="incorrect"
+            class="raycastable"
+            button="
+              label: Infrastructure as a Server;
+              width: 0.5;
+              height: 0.1;
+            "
+            position="0.27 -0.45 0"
+          ></a-entity>
+        </a-entity>
       </a-entity>
-      <a-entity hand-tracking-controls="hand: left"></a-entity>
-      <a-entity hand-tracking-controls="hand: right"></a-entity>
+      <a-entity
+        position="0 1.6 0"
+        camera
+        look-controls="magicWindowTrackingEnabled: false; touchEnabled: false; mouseEnabled: true"
+      >
+        <a-entity
+          id="fadeBackground"
+          geometry="primitive: sphere; radius: 2.5"
+          material="color: black; side: back; shader: flat; transparent: true; opacity: 0.6" visible="false">
+        </a-entity>
+      </a-entity>
+
+      <a-entity
+        hand-tracking-controls="hand: left"
+      ></a-entity>
+      <a-entity
+        hand-tracking-controls="hand: right"
+      ></a-entity>
     </a-scene>
   </body>
 </html>
