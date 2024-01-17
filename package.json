@@ -1,0 +1,12 @@
+{
+  "name": "vr-x",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx @11ty/eleventy-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "info@verkstedt.com",
+  "license": "ISC"
+}
