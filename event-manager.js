@@ -46,7 +46,7 @@ AFRAME.registerComponent('event-manager', {
 
     if (targetEl === this.darkModeButtonEl) {
       if (this.el.sceneEl.is('starry')) {
-        targetEl.setAttribute('button', 'label', 'Dark Mode');
+        targetEl.setAttribute('button', 'label', 'Dark Mode !! 🐱');
         this.el.sceneEl.setAttribute('environment', {preset: 'default'});
         this.el.sceneEl.removeState('starry');
       } else {

@@ -2,29 +2,33 @@
 AFRAME.registerComponent('button', {
   schema: {
     label: {default: 'label'},
-    width: {default: 0.11},
-    toggable: {default: false}
+    width: {default: 1},
+    height: {default: 0.5},
+    toggable: {default: false},
+    inactiveColour: {default: '#3a50c5'},
+    activeColour: {default: 'green'}
   },
   init: function () {
     var el = this.el;
     var labelEl = this.labelEl = document.createElement('a-entity');
 
-    this.color = '#3a50c5';
+    this.color = this.data.inactiveColour;
     el.setAttribute('geometry', {
       primitive: 'box',
       width: this.data.width,
-      height: 0.05,
+      height: this.data.height,
       depth: 0.04
     });
 
-    el.setAttribute('material', {color: this.color});
+    el.setAttribute('material', {color: this.data.inactiveColour});
     el.setAttribute('pressable', '');
 
     labelEl.setAttribute('position', '0 0 0.02');
     labelEl.setAttribute('text', {
       value: this.data.label,
       color: 'white',
-      align: 'center'
+      align: 'center',
+      wrapCount: 20 / this.data.width,
     });
 
     labelEl.setAttribute('scale', '0.75 0.75 0.75');
@@ -50,13 +54,13 @@ AFRAME.registerComponent('button', {
   },
 
   stateChanged: function () {
-    var color = this.el.is('pressed') ? 'green' : this.color;
+    var color = this.el.is('pressed') ? this.data.activeColour : this.data.inactiveColour;
     this.el.setAttribute('material', {color: color});
   },
 
   onPressedStarted: function () {
     var el = this.el;
-    el.setAttribute('material', {color: 'green'});
+    el.setAttribute('material', {color: this.data.activeColour});
     el.emit('click');
     if (this.data.togabble) {
       if (el.is('pressed')) {
@@ -69,6 +73,6 @@ AFRAME.registerComponent('button', {
 
   onPressedEnded: function () {
     if (this.el.is('pressed')) { return; }
-    this.el.setAttribute('material', {color: this.color});
+    this.el.setAttribute('material', {color: this.data.inactiveColour});
   }
 });
